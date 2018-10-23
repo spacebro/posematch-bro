@@ -1,0 +1,4 @@
+node_modules/
+
+settings/settings.json
+.DS_Store

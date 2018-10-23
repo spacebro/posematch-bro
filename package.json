@@ -1,0 +1,13 @@
+{
+  "name": "posematch-bro",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "hugohil",
+  "license": "MIT",
+  "dependencies": {
+    "compute-cosine-similarity": "^1.0.0",
+    "spacebro-client": "^0.4.7",
+    "standard-settings": "^1.1.15"
+  }
+}

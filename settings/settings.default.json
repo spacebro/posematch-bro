@@ -1,0 +1,11 @@
+{
+  "verbose": true,
+  "interval": 16.666,
+  "jointsName": ["Head", "Neck", "SpineShoulder", "SpineMid", "SpineBase", "ShoulderRight", "ElbowRight", "WristRight", "HandRight", "HandTipRight", "ThumbRight", "ShoulderLeft", "ElbowLeft", "WristLeft", "HandLeft", "HandTipLeft", "ThumbLeft", "HipRight", "KneeRight", "AnkleRight", "FootRight", "HipLeft", "KneeLeft", "AnkleLeft", "FootLeft"],
+  "matchVectors": [],
+  "spacebro": {
+    "host": "127.0.0.1",
+    "port": 8888,
+    "channelName": "posematch-bro"
+  }
+}
