@@ -3,6 +3,7 @@
   "interval": 16.666,
   "jointsName": ["Head", "Neck", "SpineShoulder", "SpineMid", "SpineBase", "ShoulderRight", "ElbowRight", "WristRight", "HandRight", "HandTipRight", "ThumbRight", "ShoulderLeft", "ElbowLeft", "WristLeft", "HandLeft", "HandTipLeft", "ThumbLeft", "HipRight", "KneeRight", "AnkleRight", "FootRight", "HipLeft", "KneeLeft", "AnkleLeft", "FootLeft"],
   "thresholds": [],
+  "timeouts": [],
   "matchVectors": [],
   "spacebro": {
     "host": "127.0.0.1",

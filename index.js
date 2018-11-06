@@ -18,9 +18,18 @@ const client = new SpacebroClient({
   verbose
 })
 
+let poseVector = []
+const distances = []
+const delays = [0, 0, 0]
+
 const matchVectors = settings.get('matchVectors') || []
 const thresholds = settings.get('thresholds') || []
-let poseVector = []
+const timeouts = settings.get('timeouts') || []
+
+if ((thresholds.length !== matchVectors.length) || (timeouts.length !== matchVectors.length)) {
+  console.error('ERROR: `thresholds` and `timeouts` settings must be the same length as `matchVectors`.')
+  process.exit()
+}
 
 const jointsName = settings.get('jointsName') || ['Head', 'Neck', 'SpineShoulder', 'SpineMid', 'SpineBase', 'ShoulderRight', 'ElbowRight', 'WristRight', 'HandRight', 'HandTipRight', 'ThumbRight', 'ShoulderLeft', 'ElbowLeft', 'WristLeft', 'HandLeft', 'HandTipLeft', 'ThumbLeft', 'HipRight', 'KneeRight', 'AnkleRight', 'FootRight', 'HipLeft', 'KneeLeft', 'AnkleLeft', 'FootLeft']
 
@@ -57,18 +66,20 @@ setInterval(() => {
     }
   })
 
-  const distances = []
-
   verbose && console.log('---')
   matchVectors.forEach((matchVector, index) => {
     if (poseVector.length == matchVector.length) {
       distances[index] = cosineDistanceMatching(poseVector, matchVector)
       if (distances[index] < thresholds[index]) {
-        console.log(`match pose ${index} with score: ${distances[index]}`)
-        client.emit('posematch', {
-          poseIndex: index,
-          distance: distances[index]
-        })
+        if (!delays[index]) {
+          delays[index] = Date.now()
+        }
+        const delta = (Date.now() - delays[index])
+        if (delta > timeouts[index]) {
+          console.log(`match pose ${index} with score: ${distances[index]}`)
+          client.emit('posematch', { pose: index, distance: distances[index] })
+          delays[index] = 0
+        }
       }
     }
   })
