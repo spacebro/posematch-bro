@@ -19,6 +19,7 @@ const client = new SpacebroClient({
 })
 
 const matchVectors = settings.get('matchVectors') || []
+const thresholds = settings.get('thresholds') || []
 let poseVector = []
 
 const jointsName = settings.get('jointsName') || ['Head', 'Neck', 'SpineShoulder', 'SpineMid', 'SpineBase', 'ShoulderRight', 'ElbowRight', 'WristRight', 'HandRight', 'HandTipRight', 'ThumbRight', 'ShoulderLeft', 'ElbowLeft', 'WristLeft', 'HandLeft', 'HandTipLeft', 'ThumbLeft', 'HipRight', 'KneeRight', 'AnkleRight', 'FootRight', 'HipLeft', 'KneeLeft', 'AnkleLeft', 'FootLeft']
@@ -62,9 +63,15 @@ setInterval(() => {
   matchVectors.forEach((matchVector, index) => {
     if (poseVector.length == matchVector.length) {
       distances[index] = cosineDistanceMatching(poseVector, matchVector)
+      if (distances[index] < thresholds[index]) {
+        console.log(`match pose ${index} with score: ${distances[index]}`)
+        client.emit('posematch', {
+          poseIndex: index,
+          distance: distances[index]
+        })
+      }
     }
   })
 
-  client.emit('posematch', distances)
   verbose && console.log(distances)
 }, interval)
