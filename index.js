@@ -4,7 +4,6 @@ const settings = require('standard-settings')
 const { SpacebroClient } = require('spacebro-client')
 const similarity = require('compute-cosine-similarity')
 
-const interval = settings.get('interval') || 16.666
 const verbose = settings.get('verbose') || false
 
 const client = new SpacebroClient({
@@ -48,6 +47,8 @@ client.on('kinect-datas', (datas) => {
     jointsList[id].position[0] = datas[0].value
     jointsList[id].position[1] = datas[1].value
   }
+
+  compute()
 })
 
 function cosineDistanceMatching (poseVector1, poseVector2) {
@@ -56,7 +57,7 @@ function cosineDistanceMatching (poseVector1, poseVector2) {
   return Math.sqrt(distance)
 }
 
-setInterval(() => {
+function compute () {
   poseVector = []
   jointsName.forEach((name) => {
     const position = jointsList[name].position
@@ -85,4 +86,4 @@ setInterval(() => {
   })
 
   verbose && console.log(distances)
-}, interval)
+}
