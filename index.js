@@ -51,6 +51,17 @@ client.on('kinect-datas', (datas) => {
   compute()
 })
 
+client.on('posematch-get-current-pose', () => {
+  console.log('--- posematch-get-current-pose')
+  const vector = []
+  Object.entries(jointsList).forEach(([name]) => {
+    vector.push(jointsList[name].position[0])
+    vector.push(jointsList[name].position[1])
+  })
+  console.log(vector)
+  console.log('---')
+})
+
 function cosineDistanceMatching (poseVector1, poseVector2) {
   const cosineSimilarity = similarity(poseVector1, poseVector2) || 0
   const distance = (2 * (1 - cosineSimilarity))
