@@ -91,22 +91,33 @@ function compute () {
   })
 
   verbose && console.log('---')
-  matchVectors.forEach((matchVector, index) => {
-    if (poseVector.length == matchVector.length) {
-      distances[index] = cosineDistanceMatching(poseVector, matchVector)
-      if (distances[index] < thresholds[index]) {
-        if (!delays[index]) {
-          delays[index] = Date.now()
-        }
-        const delta = (Date.now() - delays[index])
-        if (delta > timeouts[index]) {
-          console.log(`match pose ${index} with score: ${distances[index]}`)
-          client.emit('posematch', { pose: index, distance: distances[index] })
-          delays[index] = 0
+
+  const zDelta = Math.abs(jointsList.SpineMid.position.z - settings.zReference)
+  const xAbs = Math.abs(jointsList.SpineMid.position.x)
+  const zValid = (zDelta < settings.zDelta)
+  const xValid = (xAbs < settings.xDelta)
+
+  if (xValid && zValid) {
+    matchVectors.forEach((matchVector, index) => {
+      if (poseVector.length == matchVector.length) {
+        distances[index] = cosineDistanceMatching(poseVector, matchVector)
+        if (distances[index] < thresholds[index]) {
+          if (!delays[index]) {
+            delays[index] = Date.now()
+          }
+          const delta = (Date.now() - delays[index])
+          if (delta > timeouts[index]) {
+            console.log(`match pose ${index} with score: ${distances[index]}`)
+            client.emit('posematch', { pose: index, distance: distances[index] })
+            delays[index] = 0
+          }
         }
       }
-    }
-  })
-
-  verbose && console.log(distances)
+    })
+    verbose && console.log(distances)
+  } else {
+    verbose && console.log('invalid deltas')
+    verbose && console.log('x: ', xValid)
+    verbose && console.log('z: ', zValid)
+  }
 }

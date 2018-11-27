@@ -4,6 +4,9 @@
   "thresholds": [],
   "timeouts": [],
   "matchVectors": [],
+  "zReference": 1.5,
+  "zDelta": 0.75,
+  "xDelta": 1.0,
   "spacebro": {
     "host": "127.0.0.1",
     "port": 8888,
