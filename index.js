@@ -64,6 +64,15 @@ client.on('posematch-get-current-pose', () => {
   console.log('---')
 })
 
+client.on('posematch-get-reference-datas', () => {
+  console.log('--- posematch-get-reference-datas')
+  console.log('- body center (spine-mid):')
+  console.log(jointsList.SpineMid.position)
+  console.log('- arms horizontal delta:')
+  console.log(Math.abs(jointsList.HandRight.position[0] - jointsList.HandLeft.position[0]))
+  console.log('---')
+})
+
 function cosineDistanceMatching (poseVector1, poseVector2) {
   const cosineSimilarity = similarity(poseVector1, poseVector2) || 0
   const distance = (2 * (1 - cosineSimilarity))
