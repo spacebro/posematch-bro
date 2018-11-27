@@ -46,6 +46,7 @@ client.on('kinect-datas', (datas) => {
   if (type === 'joints' && jointsList[id]) {
     jointsList[id].position[0] = datas[0].value
     jointsList[id].position[1] = datas[1].value
+    jointsList[id].position[2] = (datas[2].value || 0)
   }
 
   compute()
@@ -57,6 +58,7 @@ client.on('posematch-get-current-pose', () => {
   Object.entries(jointsList).forEach(([name]) => {
     vector.push(jointsList[name].position[0])
     vector.push(jointsList[name].position[1])
+    vector.push(jointsList[name].position[2])
   })
   console.log(vector)
   console.log('---')
@@ -75,6 +77,7 @@ function compute () {
     if (position.length) {
       poseVector.push(position[0])
       poseVector.push(position[1])
+      poseVector.push(position[2])
     }
   })
 
