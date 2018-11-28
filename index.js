@@ -99,7 +99,7 @@ function compute () {
   const zValid = (zDelta < settings.zDelta)
   const xValid = (xAbs < settings.xDelta)
 
-  if (xValid && zValid) {
+  if (!settings.deltaValidation || (xValid && zValid)) {
     matchVectors.forEach((matchVector, index) => {
       if (poseVector.length == matchVector.length) {
         distances[index] = cosineDistanceMatching(poseVector, matchVector)
