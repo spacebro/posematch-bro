@@ -121,5 +121,8 @@ function compute () {
     verbose && console.log('invalid deltas')
     verbose && console.log('x: ', xValid, ' | z: ', zValid)
     verbose && console.log(jointsList.SpineMid.position)
+    verbose && console.log('x-delta: ', settings.xDelta)
+    verbose && console.log('z-delta: ', settings.zDelta)
+    verbose && console.log('z-reference: ', settings.zReference)
   }
 }
