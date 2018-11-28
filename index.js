@@ -120,5 +120,6 @@ function compute () {
   } else {
     verbose && console.log('invalid deltas')
     verbose && console.log('x: ', xValid, ' | z: ', zValid)
+    verbose && console.log(jointsList.SpineMid.position)
   }
 }
