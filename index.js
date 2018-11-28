@@ -46,7 +46,7 @@ client.on('kinect-datas', (datas) => {
   if (type === 'joints' && jointsList[id]) {
     jointsList[id].position[0] = datas[0].value
     jointsList[id].position[1] = datas[1].value
-    jointsList[id].position[2] = (datas[2].value || 0)
+    jointsList[id].position[2] = (datas[2].value || settings.zReference)
   }
 
   compute()
@@ -119,7 +119,6 @@ function compute () {
     verbose && console.log(distances)
   } else {
     verbose && console.log('invalid deltas')
-    verbose && console.log('x: ', xValid)
-    verbose && console.log('z: ', zValid)
+    verbose && console.log('x: ', xValid, ' | z: ', zValid)
   }
 }
