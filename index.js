@@ -56,9 +56,9 @@ client.on('posematch-get-current-pose', () => {
   console.log('--- posematch-get-current-pose')
   const vector = []
   Object.entries(jointsList).forEach(([name]) => {
-    vector.push(jointsList[name].position[0])
-    vector.push(jointsList[name].position[1])
-    vector.push(jointsList[name].position[2])
+    vector.push(jointsList[name].position[0].toFixed(4))
+    vector.push(jointsList[name].position[1].toFixed(4))
+    vector.push(jointsList[name].position[2].toFixed(4))
   })
   console.log(vector)
   console.log('---')
@@ -67,9 +67,11 @@ client.on('posematch-get-current-pose', () => {
 client.on('posematch-get-reference-datas', () => {
   console.log('--- posematch-get-reference-datas')
   console.log('- body center (spine-mid):')
-  console.log(jointsList.SpineMid.position)
+  console.log('x: ', jointsList.SpineMid.position[0].toFixed(4))
+  console.log('y: ', jointsList.SpineMid.position[1].toFixed(4))
+  console.log('z: ', jointsList.SpineMid.position[2].toFixed(4))
   console.log('- arms horizontal delta:')
-  console.log(Math.abs(jointsList.HandRight.position[0] - jointsList.HandLeft.position[0]))
+  console.log(Math.abs(jointsList.HandRight.position[0] - jointsList.HandLeft.position[0]).toFixed(4))
   console.log('---')
 })
 
