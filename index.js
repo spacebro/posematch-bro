@@ -37,7 +37,7 @@ jointsName.forEach(name => {
   jointsList[name] = { position: [] }
 })
 
-client.on('kinect-datas', (datas) => {
+client.on('kinect-clean-datas', (datas) => {
   const address = datas.pop().OSCaddress
   const fulltype = address.replace(/\/bodies\/\d+\//gi, '')
   const type = fulltype.split('/')[0]
