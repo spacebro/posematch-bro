@@ -44,8 +44,10 @@ client.on('kinect-clean-datas', (datas) => {
   const id = fulltype.split('/')[1]
 
   if (type === 'joints' && jointsList[id]) {
-    jointsList[id].position[0] = datas[0].value
-    jointsList[id].position[1] = datas[1].value
+    const point = normalize({ x: datas[0].value, y: datas[1].value })
+
+    jointsList[id].position[0] = point.x
+    jointsList[id].position[1] = point.y
     jointsList[id].position[2] = (datas[2].value || settings.zReference)
   }
 
@@ -74,6 +76,15 @@ client.on('posematch-get-reference-datas', () => {
   console.log(Math.abs(jointsList.HandRight.position[0] - jointsList.HandLeft.position[0]).toFixed(4))
   console.log('---')
 })
+
+function normalize (point, scale = 1) {
+  const norm = Math.sqrt((point.x * point.x) + (point.y * point.y))
+  if (norm != 0) {
+    point.x = ((scale * point.x) / norm)
+    point.y = ((scale * point.y) / norm)
+  }
+  return point
+}
 
 function cosineDistanceMatching (poseVector1, poseVector2) {
   const cosineSimilarity = similarity(poseVector1, poseVector2) || 0
